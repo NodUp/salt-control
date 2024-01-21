@@ -1,25 +1,37 @@
 import * as React from 'react';
-
+import { ErrorMessage } from '@hookform/error-message';
 import { cn } from '@/lib/utils';
 
-export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {}
+import { Props } from './index';
 
-const EmailInput = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, ...props }, ref) => {
-    return (
+const EmailInput = ({
+  className,
+  name,
+  errors,
+  placeholder,
+  register,
+}: Props) => {
+  return (
+    <div>
       <input
-        type={type}
         className={cn(
           'flex h-5 w-full rounded-lg border border-gray-400 px-2 text-zinc-600 outline-none focus:border-blue-300',
           className
         )}
-        ref={ref}
-        {...props}
+        {...register(`${name}`)}
+        id={name}
+        name={name}
+        placeholder={placeholder}
       />
-    );
-  }
-);
-EmailInput.displayName = 'PasswordtInput';
+      <ErrorMessage
+        errors={errors}
+        name={`${name}`}
+        render={({ message }: { message: string }) => (
+          <p className='mt-2 text-sm text-red-700'>{message}</p>
+        )}
+      />
+    </div>
+  );
+};
 
 export { EmailInput };
