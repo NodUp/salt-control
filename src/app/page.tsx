@@ -15,7 +15,7 @@ export default function Home() {
             Cadastre-se
           </Link>
           <Link
-            href='/signup/'
+            href='/forgotpassword/'
             className='font-semibold text-gray-400 hover:underline'
           >
             Esqueceu a senha?

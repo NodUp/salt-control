@@ -1,11 +1,11 @@
-import SignUpForm from '@/components/forms/sign-up-form';
+import ForgotPasswordForm from '@/components/forms/forgot-password-form';
 import Link from 'next/link';
 
-export default function SignUp() {
+export default function ForgotPassword() {
   return (
     <main className='flex h-screen min-h-screen w-full items-center'>
       <div className='mx-auto flex flex-col'>
-        <SignUpForm />
+        <ForgotPasswordForm />
         <div className='mt-4 flex justify-between'>
           <Link
             href='/'
@@ -14,10 +14,10 @@ export default function SignUp() {
             Login
           </Link>
           <Link
-            href='/forgotpassword/'
+            href='/signup/'
             className='font-semibold text-gray-400 hover:underline'
           >
-            Esqueceu a senha?
+            Cadastre-se?
           </Link>
         </div>
       </div>
