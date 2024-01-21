@@ -8,6 +8,7 @@ import { GridContainer } from '../ui/containers/grid-container';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 
 const schema = z.object({
   email: z
@@ -18,6 +19,7 @@ const schema = z.object({
 });
 
 export default function LoginForm() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -29,7 +31,8 @@ export default function LoginForm() {
 
   const onSubmit = async (data: any) => {
     console.log(data);
-    reset();
+    //reset();
+    router.push('/admin/dashboard');
   };
   return (
     <Container className='w-[400px]'>
