@@ -1,18 +1,17 @@
-import LoginForm from '@/components/forms/login-form';
-
+import SignUpForm from '@/components/forms/sign-up-form';
 import Link from 'next/link';
 
-export default function Home() {
+export default function SignUp() {
   return (
     <main className='flex h-screen min-h-screen w-full items-center'>
       <div className='mx-auto flex flex-col'>
-        <LoginForm />
+        <SignUpForm />
         <div className='mt-4 flex justify-between'>
           <Link
-            href='/signup/'
+            href='/'
             className='font-semibold text-gray-400 hover:underline'
           >
-            Cadastre-se
+            Login
           </Link>
           <Link
             href='/signup/'
