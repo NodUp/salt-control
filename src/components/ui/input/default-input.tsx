@@ -15,7 +15,7 @@ const DefaultInput = ({
     <div>
       <input
         className={cn(
-          'flex h-10 w-full rounded-lg border border-gray-400 px-2 text-zinc-600 outline-none focus:border-blue-300',
+          `flex py-2 h-10 w-full rounded-lg border border-gray-400 px-2 text-zinc-600 outline-none ${errors[`${name}`] ? 'border-red-700' : ''}`,
           className
         )}
         {...register(`${name}`)}

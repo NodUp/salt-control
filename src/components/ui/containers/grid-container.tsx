@@ -1,12 +1,20 @@
 import React from 'react';
 
+import { cn } from '@/lib/utils';
+
 type Props = {
   children: any;
+  className?: string;
 };
 
-const GridContainer = ({ children }: Props) => {
+const GridContainer = ({ children, className }: Props) => {
   return (
-    <div className='mb-4 grid w-80 grid-cols-[4rem,100fr] items-center gap-y-2'>
+    <div
+      className={cn(
+        `mb-4 grid w-full grid-cols-[4rem,100fr] items-center gap-y-2`,
+        className
+      )}
+    >
       {children}
     </div>
   );

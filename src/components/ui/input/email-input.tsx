@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ErrorMessage } from '@hookform/error-message';
 import { cn } from '@/lib/utils';
-
+import MailIcon from '@/assets/icons/mail-icon';
 import { Props } from './index';
 
 const EmailInput = ({
@@ -12,10 +12,13 @@ const EmailInput = ({
   register,
 }: Props) => {
   return (
-    <div>
+    <div className='relative w-full'>
+      <div className={`pointer-events-none absolute left-[4px] top-[-3px]`}>
+        <MailIcon />
+      </div>
       <input
         className={cn(
-          'flex h-5 w-full rounded-lg border border-gray-400 px-2 text-zinc-600 outline-none focus:border-blue-300',
+          `h-10 w-full rounded-lg border border-gray-400 py-2 pl-8 text-zinc-600 outline-none ${errors[`${name}`] ? 'border-red-700' : ''}`,
           className
         )}
         {...register(`${name}`)}

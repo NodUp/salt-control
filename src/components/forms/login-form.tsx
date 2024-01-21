@@ -1,6 +1,5 @@
 'use client';
 
-import { Title } from '@/components/ui/title';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input/index';
@@ -33,13 +32,15 @@ export default function LoginForm() {
     reset();
   };
   return (
-    <Container>
-      <div className='mb-4 flex border-b-2 p-2'>
-        <Title className='mx-auto'>Login</Title>
+    <Container className='w-[400px]'>
+      <div className='mb-8 flex border-b-2 p-2'>
+        <Label variant='title' className='mx-auto mb-4'>
+          Login
+        </Label>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        <GridContainer>
+        <GridContainer className='mb-8'>
           <Label className=''>Login:</Label>
 
           <Input
@@ -47,6 +48,7 @@ export default function LoginForm() {
             name='email'
             errors={errors}
             placeholder='Email'
+            variant='email'
           />
 
           <Label className=''>Senha:</Label>
@@ -60,8 +62,8 @@ export default function LoginForm() {
           />
         </GridContainer>
 
-        <Button type='submit' variant='secondary'>
-          Button
+        <Button type='submit' variant='secondary' className='mb-4'>
+          Logar
         </Button>
       </form>
     </Container>
