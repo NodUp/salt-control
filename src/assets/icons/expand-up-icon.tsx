@@ -7,7 +7,7 @@ function ExpandUpIcon() {
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
     >
-      <path d='M18 15L12 9L6 15' stroke='#33363F' stroke-width='2' />
+      <path d='M18 15L12 9L6 15' stroke='#33363F' strokeWidth='2' />
     </svg>
   );
 }

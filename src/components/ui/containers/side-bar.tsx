@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import Collapse from '../collapse';
 
 const array = [
-  { href: '/admin/dashboard/', title: 'Estoque' },
-  { href: '/admin/dashboard/', title: 'Caixa' },
+  { href: '/admin/dashboard/', title: '- Estoque' },
+  { href: '/admin/dashboard/', title: '- Caixa' },
 ];
 
 const SideBar = () => {
