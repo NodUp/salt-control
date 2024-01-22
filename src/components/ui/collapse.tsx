@@ -8,9 +8,10 @@ type Props = {
   items: any;
   title: string;
   icon?: string;
-  index?: number;
-  indexCollapse?: number;
-  setIndexCollapse?: any;
+  index: number;
+  indexCollapse: number;
+  setIndexCollapse: any;
+  hrefTitle: string;
 };
 
 function Collapse({
@@ -20,6 +21,7 @@ function Collapse({
   index,
   indexCollapse,
   setIndexCollapse,
+  hrefTitle,
 }: Props) {
   const [hover, setHover] = useState(false);
   const [open, setOpen] = useState(false);
@@ -42,7 +44,7 @@ function Collapse({
                 setHover(false);
               }}
               className={`flex flex-row items-center justify-center gap-1 hover:text-orange-300 ${indexColor === 999 && indexCollapse === index ? 'text-orange-300' : ''}`}
-              href='/admin/dashboard/'
+              href={hrefTitle}
             >
               {icon === 'person' ? (
                 <UsersIcon
