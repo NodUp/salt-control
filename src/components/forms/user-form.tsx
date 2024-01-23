@@ -9,7 +9,7 @@ import { Input } from '../ui/input/index';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { MaskInput } from '../ui/input/mask-input';
+import { SelectInput } from '../ui/select/select';
 
 const schema = z.object({
   name: z.string().min(1, { message: 'Nome: campo obrigatório !' }),
@@ -29,26 +29,41 @@ const schema = z.object({
     .string()
     .transform((value) => value.replace(/\s+/g, ''))
     .pipe(z.string().min(14, { message: 'Cpf: campo obrigatório !' })),
+  city: z.string().min(1, { message: 'Cidade: campo obrigatório !' }),
 });
 
 type Props = {
   user: any;
 };
 
+const cities = [
+  { id: 1, name: 'Mossoró' },
+  { id: 2, name: 'Angicos' },
+];
+
 function UserForm({ user }: Props) {
   const {
     register,
     handleSubmit,
     reset,
+    control,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(schema),
+    defaultValues: {
+      city: user.city ? '1' : '',
+      tel: user.tel ? user.tel : '',
+      cpf: user.cpf ? user.cpf : '',
+    },
   });
 
   const onSubmit = async (data: any) => {
     console.log(data);
-    //reset();
-    //router.push('/admin');
+    reset();
+    setValue('tel', '');
+    setValue('cpf', '');
+    setValue('city', '');
   };
 
   useEffect(() => {
@@ -106,6 +121,15 @@ function UserForm({ user }: Props) {
             placeholder='Cpf'
             variant='mask'
             mask='999.999.999-99'
+          />
+
+          <Label className=''>Cidade:</Label>
+
+          <SelectInput
+            errors={errors}
+            control={control}
+            name='city'
+            items={cities}
           />
 
           <Label className=''>Senha:</Label>
