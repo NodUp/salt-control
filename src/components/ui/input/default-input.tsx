@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { ErrorMessage } from '@hookform/error-message';
 import { cn } from '@/lib/utils';
@@ -15,7 +17,7 @@ const DefaultInput = ({
     <div>
       <input
         className={cn(
-          `flex py-2 h-10 w-full rounded-lg border border-gray-400 px-2 text-zinc-600 outline-none ${errors[`${name}`] ? 'border-red-700' : ''}`,
+          `flex h-10 w-full rounded-lg border border-gray-400 px-2 py-2 text-zinc-600 outline-none ${errors[`${name}`] ? 'border-red-700' : ''}`,
           className
         )}
         {...register(`${name}`)}

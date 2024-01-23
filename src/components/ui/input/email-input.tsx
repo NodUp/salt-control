@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { ErrorMessage } from '@hookform/error-message';
 import { cn } from '@/lib/utils';

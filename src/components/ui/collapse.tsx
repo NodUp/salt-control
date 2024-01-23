@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import ExpandUpIcon from '@/assets/icons/expand-up-icon';
 import ExpandDownIcon from '@/assets/icons/expand-down-icon';
 import UsersIcon from '@/assets/icons/users-icon';
