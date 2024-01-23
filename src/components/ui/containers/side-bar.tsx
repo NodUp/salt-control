@@ -6,8 +6,8 @@ import HomeIcon from '@/assets/icons/home-icon';
 import Link from 'next/link';
 
 const array = [
-  { href: '/admin/dashboard/', title: 'Estoque' },
-  { href: '/admin/dashboard/', title: 'Caixa' },
+  { href: '/admin', title: 'Estoque' },
+  { href: '/admin', title: 'Caixa' },
 ];
 
 const SideBar = () => {
@@ -17,7 +17,7 @@ const SideBar = () => {
       <div className='justify-left mb-2 flex items-center p-1'>
         <HomeIcon />
         <Link
-          href='/admin/dashboard'
+          href='/admin'
           className={`hover:text-sky-800 ${indexCollapse === 0 ? 'font-semibold text-sky-800' : ''}`}
           onClick={() => {
             setIndexCollapse(0);
@@ -38,7 +38,7 @@ const SideBar = () => {
       <Collapse
         items={array}
         title='Produtos'
-        hrefTitle='/admin/dashboard'
+        hrefTitle='/admin'
         index={2}
         indexCollapse={indexCollapse}
         setIndexCollapse={setIndexCollapse}

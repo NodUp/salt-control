@@ -20,21 +20,26 @@ import {
   TableRow,
 } from '@/components/ui/table';
 
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  addPath: string;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  addPath,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
+
+  const router = useRouter();
 
   const table = useReactTable({
     data,
@@ -50,23 +55,38 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className='flex items-center py-4'>
-        <Input
-          placeholder='Nome ...'
-          value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
-          onChange={(event: any) =>
-            table.getColumn('name')?.setFilterValue(event.target.value)
-          }
-          className='mr-8 w-[250px]'
-        />
-        <Input
-          placeholder='Status ...'
-          value={(table.getColumn('status')?.getFilterValue() as string) ?? ''}
-          onChange={(event: any) =>
-            table.getColumn('status')?.setFilterValue(event.target.value)
-          }
-          className='w-[250px] outline-none'
-        />
+      <div className='flex w-[800px] min-w-[800px] flex-row items-center justify-between py-4'>
+        <div className='flex'>
+          <Input
+            placeholder='Nome ...'
+            value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
+            onChange={(event: any) =>
+              table.getColumn('name')?.setFilterValue(event.target.value)
+            }
+            className='mr-4 w-[250px]'
+          />
+          <Input
+            placeholder='Status ...'
+            value={
+              (table.getColumn('status')?.getFilterValue() as string) ?? ''
+            }
+            onChange={(event: any) =>
+              table.getColumn('status')?.setFilterValue(event.target.value)
+            }
+            className='w-[250px] outline-none'
+          />
+        </div>
+        <div>
+          <Button
+            variant='secondary'
+            size='sm'
+            onClick={() => {
+              router.push(addPath);
+            }}
+          >
+            + Adicionar
+          </Button>
+        </div>
       </div>
       <div className='w-[800px] min-w-[800px] rounded-md border'>
         <Table>

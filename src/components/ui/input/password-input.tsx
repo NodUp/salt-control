@@ -31,7 +31,7 @@ const PasswordtInput = ({
       />
       <div
         onClick={() => setShowPassword(!showPassword)}
-        className='absolute left-[270px] top-[10px]'
+        className='absolute right-2 top-[10px]'
       >
         {!showPassword ? <VisibleIcon /> : <UnVisibleIcon />}
       </div>

@@ -4,6 +4,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import { Button } from '@/components/ui/button';
 import EditIcon from '@/assets/icons/edit-icon';
 import TrashIcon from '@/assets/icons/trash-icon';
+import { useRouter } from 'next/navigation';
 
 export type Users = {
   id: string;
@@ -28,14 +29,18 @@ export const columns: ColumnDef<Users>[] = [
   {
     id: 'actions',
     cell: ({ row }) => {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const router = useRouter();
+
       const onDelete = () => {
+        //removeUser();
+        //row.original = [];
         console.log('deletar usuário' + { ...row });
         console.log(row.original);
       };
 
       const onEdit = () => {
-        console.log('editar usuário');
-        console.log(row.original);
+        router.push(`/admin/users/edituser/${row.original.id}`);
       };
 
       return (

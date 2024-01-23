@@ -32,8 +32,9 @@ export default function LoginForm() {
   const onSubmit = async (data: any) => {
     console.log(data);
     //reset();
-    router.push('/admin/dashboard');
+    router.push('/admin');
   };
+
   return (
     <Container className='w-[400px]'>
       <div className='mb-8 flex border-b-2 p-2'>
