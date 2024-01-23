@@ -24,10 +24,7 @@ export default function RootLayout({
   return (
     <html lang='pt'>
       <body
-        className={cn(
-          'min-h-screen bg-background antialiased',
-          maven.className
-        )}
+        className={cn('min-h-screen bg-slate-100 antialiased', maven.className)}
       >
         {children}
       </body>

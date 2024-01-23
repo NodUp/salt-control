@@ -32,9 +32,8 @@ export default async function Users() {
 
   return (
     <div>
-      <div className='p-1'>
-        <PathComponent />
-      </div>
+      <PathComponent />
+
       <div className='mt-4 flex justify-center'>
         <DataTable
           columns={columns}

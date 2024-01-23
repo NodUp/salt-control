@@ -5,6 +5,7 @@ import * as React from 'react';
 import { DefaultInput } from './default-input';
 import { PasswordtInput } from './password-input';
 import { EmailInput } from './email-input';
+import { MaskInput } from './mask-input';
 
 export type Props = {
   className?: string;
@@ -13,6 +14,7 @@ export type Props = {
   errors?: any;
   placeholder?: string;
   register?: any;
+  mask?: string;
 };
 
 const Input = ({
@@ -22,6 +24,7 @@ const Input = ({
   errors,
   placeholder,
   register,
+  mask,
 }: Props) => {
   if (variant === 'email') {
     return (
@@ -41,6 +44,17 @@ const Input = ({
         errors={errors}
         placeholder={placeholder}
         register={register}
+      />
+    );
+  } else if (variant === 'mask') {
+    return (
+      <MaskInput
+        className={className}
+        name={name}
+        errors={errors}
+        placeholder={placeholder}
+        register={register}
+        mask={mask}
       />
     );
   } else {

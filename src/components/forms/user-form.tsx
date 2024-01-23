@@ -9,6 +9,7 @@ import { Input } from '../ui/input/index';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { MaskInput } from '../ui/input/mask-input';
 
 const schema = z.object({
   name: z.string().min(1, { message: 'Nome: campo obrigatório !' }),
@@ -20,6 +21,14 @@ const schema = z.object({
   confirm_password: z
     .string()
     .min(6, { message: 'Senha: campo obrigatório !' }),
+  tel: z
+    .string()
+    .transform((value) => value.replace(/\s+/g, ''))
+    .pipe(z.string().min(14, { message: 'Tel: campo obrigatório !' })),
+  cpf: z
+    .string()
+    .transform((value) => value.replace(/\s+/g, ''))
+    .pipe(z.string().min(14, { message: 'Cpf: campo obrigatório !' })),
 });
 
 type Props = {
@@ -75,6 +84,28 @@ function UserForm({ user }: Props) {
             errors={errors}
             placeholder='Email'
             variant='email'
+          />
+
+          <Label className=''>Tel:</Label>
+
+          <Input
+            register={register}
+            name='tel'
+            errors={errors}
+            placeholder='Telefone'
+            variant='mask'
+            mask='(99) 9 9999-9999'
+          />
+
+          <Label className=''>Cpf:</Label>
+
+          <Input
+            register={register}
+            name='cpf'
+            errors={errors}
+            placeholder='Cpf'
+            variant='mask'
+            mask='999.999.999-99'
           />
 
           <Label className=''>Senha:</Label>
