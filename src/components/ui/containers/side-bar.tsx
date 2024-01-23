@@ -2,17 +2,30 @@
 
 import React, { useState } from 'react';
 import Collapse from '../collapse';
+import HomeIcon from '@/assets/icons/home-icon';
+import Link from 'next/link';
 
 const array = [
-  { href: '/admin/dashboard/', title: '- Estoque' },
-  { href: '/admin/dashboard/', title: '- Caixa' },
+  { href: '/admin/dashboard/', title: 'Estoque' },
+  { href: '/admin/dashboard/', title: 'Caixa' },
 ];
 
 const SideBar = () => {
   const [indexCollapse, setIndexCollapse] = useState(0);
   return (
-    <div className='m-4 flex h-[50vh] w-[250px] flex-col rounded-lg border p-2'>
-      <div className='mb-2 flex justify-center'>Menu</div>
+    <div className='m-4 flex h-[50vh] w-[300px] flex-col rounded-lg border bg-white p-2 shadow-lg'>
+      <div className='justify-left mb-2 flex items-center p-1'>
+        <HomeIcon />
+        <Link
+          href='/admin/dashboard'
+          className={`hover:text-sky-800 ${indexCollapse === 0 ? 'font-semibold text-sky-800' : ''}`}
+          onClick={() => {
+            setIndexCollapse(0);
+          }}
+        >
+          <span className='ml-4'>Página Inicial</span>
+        </Link>
+      </div>
       <Collapse
         items={[]}
         title='Usuários'

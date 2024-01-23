@@ -1,8 +1,9 @@
 import React from 'react';
 
 import Avatar from '@/assets/avatar';
-import Logo from '@/assets/logo';
 import Link from 'next/link';
+import Image from 'next/image';
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,13 +15,13 @@ import {
 
 const HeaderBar = () => {
   return (
-    <div className='flex h-[100px] w-full flex-row items-center justify-between border shadow-xl'>
-      <div className='flex w-[250px] items-center justify-center p-1'>
+    <div className='flex h-[100px] w-full flex-row items-center justify-between border bg-white shadow-lg'>
+      <div className='flex w-[300px] items-center justify-center p-1'>
         <Link href='/admin/dashboard/'>
-          <Logo />
+          <Image src='/logo.svg' width='45' height='45' alt='logo' />
         </Link>
       </div>
-      <div className='flex w-[250px] items-center justify-center'>
+      <div className='flex w-[300px] items-center justify-center'>
         <DropdownMenu>
           <DropdownMenuTrigger className='p-2 outline-none'>
             <span className='h-[80px] w-[30px]'>

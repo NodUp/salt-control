@@ -3,6 +3,7 @@ import ExpandUpIcon from '@/assets/icons/expand-up-icon';
 import ExpandDownIcon from '@/assets/icons/expand-down-icon';
 import UsersIcon from '@/assets/icons/users-icon';
 import Link from 'next/link';
+import ItemListIcon from '@/assets/icons/item-list-icon';
 
 type Props = {
   items: any;
@@ -23,7 +24,6 @@ function Collapse({
   setIndexCollapse,
   hrefTitle,
 }: Props) {
-  const [hover, setHover] = useState(false);
   const [open, setOpen] = useState(false);
   const [indexColor, setIndexColor] = useState(0);
 
@@ -37,25 +37,13 @@ function Collapse({
                 setIndexColor(999);
                 setIndexCollapse(index);
               }}
-              onMouseEnter={() => {
-                setHover(true);
-              }}
-              onMouseLeave={() => {
-                setHover(false);
-              }}
-              className={`flex flex-row items-center justify-center gap-1 hover:text-orange-300 ${indexColor === 999 && indexCollapse === index ? 'text-orange-300' : ''}`}
+              className={`flex flex-row items-center justify-center gap-1 hover:text-sky-800 ${indexColor === 999 && indexCollapse === index ? 'font-semibold text-sky-800' : ''}`}
               href={hrefTitle}
             >
               {icon === 'person' ? (
-                <UsersIcon
-                  color={
-                    hover
-                      ? '#FDBA74'
-                      : indexColor === 999 && indexCollapse === index
-                        ? '#FDBA74'
-                        : '#000000'
-                  }
-                />
+                <div className='mr-3'>
+                  <UsersIcon />
+                </div>
               ) : null}
               <span>{title}</span>
             </Link>
@@ -71,7 +59,7 @@ function Collapse({
           {open ? <ExpandDownIcon /> : <ExpandUpIcon />}
         </div>
       </div>
-      <div className='ml-2 mt-1 gap-1'>
+      <div className='ml-2 mt-2'>
         {open ? (
           <div>
             {items.map((a: any, i: any) => (
@@ -81,10 +69,13 @@ function Collapse({
                   setIndexCollapse(index);
                 }}
                 key={i}
-                className={`flex flex-row hover:text-orange-300 ${indexColor === i + 1 && indexCollapse === index ? 'text-orange-300' : ''}`}
+                className={`mb-1 mt-1 flex flex-row hover:text-sky-800 ${indexColor === i + 1 && indexCollapse === index ? 'font-semibold text-sky-800' : ''}`}
                 href={a.href}
               >
-                <span>{a.title}</span>
+                <div className='flex flex-row items-center justify-center gap-4'>
+                  <ItemListIcon />
+                  <span>{a.title}</span>
+                </div>
               </Link>
             ))}
           </div>
