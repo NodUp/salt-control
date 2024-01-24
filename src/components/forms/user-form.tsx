@@ -10,6 +10,7 @@ import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { SelectInput } from '../ui/select/select';
+import { DatePicker } from '../ui/data-picker';
 
 const schema = z.object({
   name: z.string().min(1, { message: 'Nome: campo obrigatório !' }),
@@ -30,6 +31,14 @@ const schema = z.object({
     .transform((value) => value.replace(/\s+/g, ''))
     .pipe(z.string().min(14, { message: 'Cpf: campo obrigatório !' })),
   city: z.string().min(1, { message: 'Cidade: campo obrigatório !' }),
+  data_nascimento: z.coerce.date({
+    errorMap: (issue, { defaultError }) => ({
+      message:
+        issue.code === 'invalid_date'
+          ? 'Data: campo obrigatório !'
+          : defaultError,
+    }),
+  }),
 });
 
 type Props = {
@@ -130,6 +139,14 @@ function UserForm({ user }: Props) {
             control={control}
             name='city'
             items={cities}
+          />
+
+          <Label className=''>Data:</Label>
+
+          <DatePicker
+            errors={errors}
+            control={control}
+            name='data_nascimento'
           />
 
           <Label className=''>Senha:</Label>
