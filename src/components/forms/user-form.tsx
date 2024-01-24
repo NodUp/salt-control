@@ -39,6 +39,7 @@ const schema = z.object({
           : defaultError,
     }),
   }),
+  valor: z.string().min(1, { message: 'Valor: campo obrigatório !' }),
 });
 
 type Props = {
@@ -64,6 +65,7 @@ function UserForm({ user }: Props) {
       city: user.city ? '1' : '',
       tel: user.tel ? user.tel : '',
       cpf: user.cpf ? user.cpf : '',
+      valor: user.cpf ? user.cpf : '',
     },
   });
 
@@ -147,6 +149,16 @@ function UserForm({ user }: Props) {
             errors={errors}
             control={control}
             name='data_nascimento'
+          />
+
+          <Label className=''>Valor:</Label>
+
+          <Input
+            control={control}
+            name='valor'
+            errors={errors}
+            placeholder='R$ '
+            variant='currency'
           />
 
           <Label className=''>Senha:</Label>
