@@ -18,7 +18,7 @@ export default function Home() {
             href='/forgotpassword/'
             className='font-semibold text-gray-400 hover:underline'
           >
-            Esqueceu a senha?
+            Esqueceu a senha??
           </Link>
         </div>
       </div>
