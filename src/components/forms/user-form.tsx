@@ -11,6 +11,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { SelectInput } from '../ui/select/select';
 import { DatePicker } from '../ui/data-picker';
+import { addUser } from '@/actions/user-action';
 
 const schema = z.object({
   name: z.string().min(1, { message: 'Nome: campo obrigatório !' }),
@@ -31,7 +32,7 @@ const schema = z.object({
     .transform((value) => value.replace(/\s+/g, ''))
     .pipe(z.string().min(14, { message: 'Cpf: campo obrigatório !' })),
   city: z.string().min(1, { message: 'Cidade: campo obrigatório !' }),
-  data_nascimento: z.coerce.date({
+  dateBirth: z.coerce.date({
     errorMap: (issue, { defaultError }) => ({
       message:
         issue.code === 'invalid_date'
@@ -39,7 +40,7 @@ const schema = z.object({
           : defaultError,
     }),
   }),
-  valor: z.string().min(1, { message: 'Valor: campo obrigatório !' }),
+  price: z.string().min(1, { message: 'Valor: campo obrigatório !' }),
 });
 
 type Props = {
@@ -65,12 +66,17 @@ function UserForm({ user }: Props) {
       city: user.city ? '1' : '',
       tel: user.tel ? user.tel : '',
       cpf: user.cpf ? user.cpf : '',
-      valor: user.cpf ? user.cpf : '',
+      price: user.price ? user.price : '',
     },
   });
 
   const onSubmit = async (data: any) => {
-    console.log(data);
+    addUser({
+      ...data,
+      roleId: 'clrsg12oa00003kcugnp9en2b',
+      status: 'ACTIVE',
+    });
+
     reset();
     setValue('tel', '');
     setValue('cpf', '');
@@ -145,17 +151,13 @@ function UserForm({ user }: Props) {
 
           <Label className=''>Data:</Label>
 
-          <DatePicker
-            errors={errors}
-            control={control}
-            name='data_nascimento'
-          />
+          <DatePicker errors={errors} control={control} name='dateBirth' />
 
           <Label className=''>Valor:</Label>
 
           <Input
             control={control}
-            name='valor'
+            name='price'
             errors={errors}
             placeholder='R$ '
             variant='currency'

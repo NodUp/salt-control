@@ -64,7 +64,7 @@ const Input = ({
     return (
       <CurrencyInput
         className={className}
-        name='valor'
+        name={name}
         errors={errors}
         placeholder='R$'
         control={control}
