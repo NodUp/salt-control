@@ -6,8 +6,8 @@ import HomeIcon from '@/assets/icons/home-icon';
 import Link from 'next/link';
 
 const array = [
-  { href: '/admin', title: 'Estoque' },
-  { href: '/admin', title: 'Caixa' },
+  { href: '/admin', title: 'Entrada' },
+  { href: '/admin', title: 'Saída' },
 ];
 
 const SideBar = () => {

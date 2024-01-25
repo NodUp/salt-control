@@ -33,11 +33,62 @@ model Persons {
   name    String
   cpf     String?
   tel     String?
-  city String?
-  dateBirth String?
-  price String?
   userId  String
   user    Users?  @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "persons_userId_foreign")
+}
+
+model Centers {
+  id      String     @id @default(cuid())
+  name    String
+  stock Stocks[]
+}
+
+model Products {
+  id      String     @id @default(cuid())
+  name    String
+  stock Stocks[]
+}
+
+model Stocks {
+  id        String     @id @default(cuid())
+  centerId  String
+  qtd       Decimal
+  center    Centers?  @relation(fields: [centerId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "stock_centerId_foreign")
+  productId String
+  product   Products?  @relation(fields: [productId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "stockk_productId_foreign")
+}
+
+model Entries {
+  id        String     @id @default(cuid())
+  transportation String?
+  arrivalDate DateTime?
+  departureDate DateTime?
+  container String?
+  invoice String?
+  damage String?
+  qtd Decimal?
+  status EntriesStatus?
+}
+
+model Departuries {
+  id        String     @id @default(cuid())
+  departureDate DateTime?
+  invoice String?
+  client String?
+  value Decimal?
+  total Decimal?
+  qtd Decimal?
+  status DeparturiesStatus?
+}
+
+enum DeparturiesStatus {
+  STARTED
+  FINISHED
+}
+
+enum EntriesStatus {
+  LOCAL
+  TRANSIT
 }
 
 enum UserStatus {
