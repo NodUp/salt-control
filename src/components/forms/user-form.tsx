@@ -12,6 +12,7 @@ import { useForm } from 'react-hook-form';
 import { SelectInput } from '../ui/select/select';
 import { DatePicker } from '../ui/data-picker';
 import { addUser } from '@/actions/user-action';
+import { SubmitButton } from '../ui/button/submit-button';
 
 const schema = z.object({
   name: z.string().min(1, { message: 'Nome: campo obrigatório !' }),
@@ -184,9 +185,7 @@ function UserForm({ user }: Props) {
           />
         </GridContainer>
 
-        <Button type='submit' variant='secondary' className='mb-4'>
-          Cadastrar
-        </Button>
+        <SubmitButton variant='secondary' className='mb-4' text='Cadastrar' />
       </form>
     </Container>
   );
