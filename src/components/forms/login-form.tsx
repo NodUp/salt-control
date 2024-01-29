@@ -9,6 +9,7 @@ import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 const schema = z.object({
   email: z
@@ -37,10 +38,16 @@ export default function LoginForm() {
 
   return (
     <Container className='w-[400px]'>
-      <div className='mb-8 flex border-b-2 p-2'>
-        <Label variant='title' className='mx-auto mb-4'>
+      <div className='mb-8 flex flex-col border-b-2 p-2'>
+        <div className='mx-auto'>
+          <Image src='/logo.jpeg' width='200' height='200' alt='logo' />
+        </div>
+        {/**
+           *   <Label variant='title' className='mx-auto mb-4'>
           Login
         </Label>
+           * 
+           */}
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)}>

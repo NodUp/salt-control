@@ -17,7 +17,7 @@ const HeaderBar = () => {
   return (
     <div className='flex h-[100px] w-full flex-row items-center justify-between border bg-white shadow-lg'>
       <div className='flex w-[300px] items-center justify-center p-1'>
-        <Image src='/logo.svg' width='45' height='45' alt='logo' />
+        <Image src='/logo.jpeg' width='200' height='200' alt='logo' />
       </div>
       <div className='flex w-[300px] items-center justify-center'>
         <DropdownMenu>
