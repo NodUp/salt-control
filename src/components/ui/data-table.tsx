@@ -65,7 +65,8 @@ export function DataTable<TData, TValue>({
             }
             className='mr-4 w-[250px]'
           />
-          <Input
+          {/**
+             * <Input
             placeholder='Status ...'
             value={
               (table.getColumn('status')?.getFilterValue() as string) ?? ''
@@ -75,6 +76,8 @@ export function DataTable<TData, TValue>({
             }
             className='w-[250px] outline-none'
           />
+             * 
+             */}
         </div>
         <div>
           <Button
@@ -131,7 +134,7 @@ export function DataTable<TData, TValue>({
                   colSpan={columns.length}
                   className='h-24 text-center'
                 >
-                  No results.
+                  Nenhum item encontrado.
                 </TableCell>
               </TableRow>
             )}

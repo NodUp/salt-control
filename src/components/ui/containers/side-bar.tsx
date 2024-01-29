@@ -38,7 +38,7 @@ const SideBar = () => {
       <Collapse
         items={array}
         title='Produtos'
-        hrefTitle='/admin'
+        hrefTitle='/admin/products'
         index={2}
         indexCollapse={indexCollapse}
         setIndexCollapse={setIndexCollapse}
