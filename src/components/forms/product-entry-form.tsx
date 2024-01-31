@@ -13,47 +13,57 @@ import { SelectInput } from '../ui/select/select';
 import { DatePicker } from '../ui/data-picker';
 import { addUser } from '@/actions/user-action';
 import { SubmitButton } from '../ui/button/submit-button';
+import { addEntry } from '@/actions/entry';
+import { useToast } from '../ui/use-toast';
 
 const schema = z.object({
-  name: z.string().min(1, { message: 'Nome: campo obrigatório !' }),
-  email: z
-    .string()
-    .min(1, { message: 'E-mail: campo obrigatório !' })
-    .email('E-mail: formato inválido'),
-  password: z.string().min(6, { message: 'Senha: campo obrigatório !' }),
-  confirm_password: z
-    .string()
-    .min(6, { message: 'Senha: campo obrigatório !' }),
-  tel: z
-    .string()
-    .transform((value) => value.replace(/\s+/g, ''))
-    .pipe(z.string().min(14, { message: 'Tel: campo obrigatório !' })),
-  cpf: z
-    .string()
-    .transform((value) => value.replace(/\s+/g, ''))
-    .pipe(z.string().min(14, { message: 'Cpf: campo obrigatório !' })),
-  city: z.string().min(1, { message: 'Cidade: campo obrigatório !' }),
-  dateBirth: z.coerce.date({
+  productId: z
+    .string({
+      required_error: 'Produto: campo obrigatório !',
+    })
+    .min(1, { message: 'Produto: campo obrigatório !' }),
+  departureDate: z.coerce.date({
     errorMap: (issue, { defaultError }) => ({
       message:
         issue.code === 'invalid_date'
-          ? 'Data: campo obrigatório !'
+          ? 'Data de Saída: campo obrigatório !'
           : defaultError,
     }),
   }),
-  price: z.string().min(1, { message: 'Valor: campo obrigatório !' }),
+  arrivalDate: z.coerce.date({
+    errorMap: (issue, { defaultError }) => ({
+      message:
+        issue.code === 'invalid_date'
+          ? 'Data de Chegada: campo obrigatório !'
+          : defaultError,
+    }),
+  }),
+  transportation: z
+    .string()
+    .min(1, { message: 'Meio de Transporte: campo obrigatório !' }),
+  container: z.string().min(1, { message: 'Container: campo obrigatório !' }),
+  invoice: z.string().min(1, { message: 'Nota Fiscal: campo obrigatório !' }),
+  damage: z.string().min(1, { message: 'Avaria: campo obrigatório !' }),
+  status: z
+    .string({
+      required_error: 'Status: campo obrigatório !',
+    })
+    .min(1, { message: 'Status: campo obrigatório !' }),
+  qtd: z.string().min(1, { message: 'Qtd: campo obrigatório !' }),
 });
 
 type Props = {
   entry: any;
+  products: any;
 };
 
-const cities = [
-  { id: 1, name: 'Mossoró' },
-  { id: 2, name: 'Angicos' },
+const status = [
+  { id: 'LOCAL', name: 'No Local' },
+  { id: 'TRANSIT', name: 'Em trânsito' },
 ];
 
-function AddProductEntryForm({ entry }: Props) {
+function AddProductEntryForm({ entry, products }: Props) {
+  const { toast } = useToast();
   const {
     register,
     handleSubmit,
@@ -63,19 +73,23 @@ function AddProductEntryForm({ entry }: Props) {
     formState: { errors },
   } = useForm({
     resolver: zodResolver(schema),
-    defaultValues: {
-      //city: user.city ? '1' : '',
-      //tel: user.tel ? user.tel : '',
-      //cpf: user.cpf ? user.cpf : '',
-      //price: user.price ? user.price : '',
-    },
   });
 
-  const onSubmit = async (data: any) => {
+  const clear = () => {
     reset();
-    //setValue('tel', '');
-    //setValue('cpf', '');
-    //setValue('city', '');
+    setValue('qtd', '');
+    setValue('productId', '');
+    setValue('status', '');
+  };
+
+  const onSubmit = async (data: any) => {
+    await addEntry(data);
+    toast({
+      title: 'Sucesso !',
+      description: 'Dados cadastrados.',
+      variant: 'constructive',
+    });
+    clear();
   };
 
   return (
@@ -90,88 +104,78 @@ function AddProductEntryForm({ entry }: Props) {
         <Label variant='subtitle'>Dados Gerais</Label>
 
         <GridContainer className='mb-8 mt-4'>
-          <Label className=''>Nome:</Label>
-
-          <Input
-            register={register}
-            name='name'
-            errors={errors}
-            placeholder='Nome'
-          />
-
-          <Label className=''>Email:</Label>
-
-          <Input
-            register={register}
-            name='email'
-            errors={errors}
-            placeholder='Email'
-            variant='email'
-          />
-
-          <Label className=''>Tel:</Label>
-
-          <Input
-            register={register}
-            name='tel'
-            errors={errors}
-            placeholder='Telefone'
-            variant='mask'
-            mask='(99) 9 9999-9999'
-          />
-
-          <Label className=''>Cpf:</Label>
-
-          <Input
-            register={register}
-            name='cpf'
-            errors={errors}
-            placeholder='Cpf'
-            variant='mask'
-            mask='999.999.999-99'
-          />
-
-          <Label className=''>Cidade:</Label>
+          <Label className=''>Produto:</Label>
 
           <SelectInput
             errors={errors}
             control={control}
-            name='city'
-            items={cities}
+            name='productId'
+            items={products}
           />
 
-          <Label className=''>Data:</Label>
+          <Label className=''>Data de Saída:</Label>
 
-          <DatePicker errors={errors} control={control} name='dateBirth' />
+          <DatePicker errors={errors} control={control} name='departureDate' />
 
-          <Label className=''>Valor:</Label>
+          <Label className=''>Data de Chegada:</Label>
+
+          <DatePicker errors={errors} control={control} name='arrivalDate' />
+
+          <Label className=''>Meio de Transporte:</Label>
 
           <Input
+            register={register}
+            name='transportation'
+            errors={errors}
+            placeholder='Meio de Transporte'
+          />
+
+          <Label className=''>Container:</Label>
+
+          <Input
+            register={register}
+            name='container'
+            errors={errors}
+            placeholder='Nome do Container'
+          />
+
+          <Label className=''>Nota Fiscal:</Label>
+
+          <Input
+            register={register}
+            name='invoice'
+            errors={errors}
+            placeholder='Nota Fiscal'
+          />
+
+          <Label className=''>Avaria:</Label>
+
+          <Input
+            register={register}
+            name='damage'
+            errors={errors}
+            placeholder='Avaria na Mercadoria'
+          />
+
+          <Label className=''>Qtd:</Label>
+
+          <Input
+            register={register}
             control={control}
-            name='price'
+            name='qtd'
             errors={errors}
-            placeholder='R$ '
-            variant='currency'
+            placeholder='Total'
+            variant='mask'
+            mask='99999999'
           />
 
-          <Label className=''>Senha:</Label>
+          <Label className=''>Status:</Label>
 
-          <Input
-            register={register}
-            name='password'
+          <SelectInput
             errors={errors}
-            placeholder='Senha'
-            variant='password'
-          />
-
-          <Label className=''>Senha:</Label>
-
-          <Input
-            register={register}
-            name='confirm_password'
-            errors={errors}
-            placeholder='Senha'
-            variant='password'
+            control={control}
+            name='status'
+            items={status}
           />
         </GridContainer>
 

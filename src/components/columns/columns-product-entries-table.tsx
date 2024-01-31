@@ -6,11 +6,23 @@ import EditIcon from '@/assets/icons/edit-icon';
 import { useRouter } from 'next/navigation';
 import { Alert } from '../ui/alert';
 import { deleteProduct } from '@/actions/products';
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
+//import { utcToZonedTime } from 'date-fns-tz';
 
 export const columns: ColumnDef<any>[] = [
   {
     accessorKey: 'name',
     header: 'Nome',
+    cell: ({ row }) => {
+      return (
+        <>
+          <div>
+            <span>{row.original.product.name}</span>
+          </div>
+        </>
+      );
+    },
   },
   {
     accessorKey: 'transportation',
@@ -19,10 +31,41 @@ export const columns: ColumnDef<any>[] = [
   {
     accessorKey: 'arrivalDate',
     header: 'Chegada',
+    cell: ({ row }) => {
+      const formatoBrasileiro = 'dd/MM/yyyy';
+      const dataFormatada = format(
+        row.original.arrivalDate,
+        formatoBrasileiro,
+        { locale: ptBR }
+      );
+      return (
+        <>
+          <div>
+            <span>{dataFormatada.toString()}</span>
+          </div>
+        </>
+      );
+    },
   },
   {
     accessorKey: 'departureDate',
     header: 'Saída',
+    cell: ({ row }) => {
+      const formatoBrasileiro = 'dd/MM/yyyy';
+      const dataFormatada = format(
+        row.original.departureDate,
+        formatoBrasileiro,
+        { locale: ptBR }
+      );
+
+      return (
+        <>
+          <div>
+            <span>{dataFormatada.toString()}</span>
+          </div>
+        </>
+      );
+    },
   },
   {
     accessorKey: 'container',
