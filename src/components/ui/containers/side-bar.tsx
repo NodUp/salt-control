@@ -6,7 +6,7 @@ import HomeIcon from '@/assets/icons/home-icon';
 import Link from 'next/link';
 
 const array = [
-  { href: '/admin', title: 'Entrada' },
+  { href: '/admin/products/productEntry', title: 'Entrada' },
   { href: '/admin', title: 'Saída' },
 ];
 

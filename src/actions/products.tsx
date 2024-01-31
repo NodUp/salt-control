@@ -14,6 +14,18 @@ export const getProducts = async (): Promise<Products[]> => {
   });
 };
 
+export const getOnlyProducts = async (): Promise<any[]> => {
+  const products = await prisma.products.findMany({
+    orderBy: [
+      {
+        name: 'asc',
+      },
+    ],
+  });
+
+  return products;
+};
+
 export const addProduct = async (formData: any) => {
   const { name } = formData;
 

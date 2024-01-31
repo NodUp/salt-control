@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 //import { Inter as FontSans } from 'next/font/google';
-
+import { Toaster } from '@/components/ui/toaster';
 import { Maven_Pro as FontSans } from 'next/font/google';
 
 const maven = FontSans({
@@ -27,6 +27,7 @@ export default function RootLayout({
         className={cn('min-h-screen bg-slate-100 antialiased', maven.className)}
       >
         {children}
+        <Toaster />
       </body>
     </html>
   );
