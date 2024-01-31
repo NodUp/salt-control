@@ -1,8 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
 import { Container } from '../ui/containers/content-container';
-import { Button } from '@/components/ui/button';
-import { useEffect } from 'react';
 import { Label } from '../ui/label';
 import { GridContainer } from '../ui/containers/grid-container';
 import { Input } from '../ui/input/index';
@@ -11,10 +10,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { SelectInput } from '../ui/select/select';
 import { DatePicker } from '../ui/data-picker';
-import { addUser } from '@/actions/user-action';
 import { SubmitButton } from '../ui/button/submit-button';
 import { addEntry } from '@/actions/entry';
 import { useToast } from '../ui/use-toast';
+import { updateEntry } from '@/actions/entry';
 
 const schema = z.object({
   productId: z
@@ -73,6 +72,17 @@ function AddProductEntryForm({ entry, products }: Props) {
     formState: { errors },
   } = useForm({
     resolver: zodResolver(schema),
+    defaultValues: {
+      status: entry ? entry.status : '',
+      qtd: entry ? entry.qtd : '',
+      damage: entry ? entry.damage : '',
+      invoice: entry ? entry.invoice : '',
+      container: entry ? entry.container : '',
+      transportation: entry ? entry.transportation : '',
+      productId: entry ? entry.product.id : '',
+      departureDate: entry ? entry.departureDate : '',
+      arrivalDate: entry ? entry.arrivalDate : '',
+    },
   });
 
   const clear = () => {
@@ -83,13 +93,17 @@ function AddProductEntryForm({ entry, products }: Props) {
   };
 
   const onSubmit = async (data: any) => {
-    await addEntry(data);
+    if (entry) {
+      await updateEntry(data, entry.id);
+    } else {
+      await addEntry(data);
+      clear();
+    }
     toast({
       title: 'Sucesso !',
       description: 'Dados cadastrados.',
       variant: 'constructive',
     });
-    clear();
   };
 
   return (
@@ -179,7 +193,11 @@ function AddProductEntryForm({ entry, products }: Props) {
           />
         </GridContainer>
 
-        <SubmitButton variant='secondary' className='mb-4' text='Cadastrar' />
+        <SubmitButton
+          variant='secondary'
+          className='mb-4'
+          text={entry ? 'Atualizar' : 'Cadastrar'}
+        />
       </form>
     </Container>
   );

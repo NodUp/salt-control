@@ -5,9 +5,9 @@ import { Button } from '@/components/ui/button';
 import EditIcon from '@/assets/icons/edit-icon';
 import { useRouter } from 'next/navigation';
 import { Alert } from '../ui/alert';
-import { deleteProduct } from '@/actions/products';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { deleteEntry } from '@/actions/entry';
 //import { utcToZonedTime } from 'date-fns-tz';
 
 export const columns: ColumnDef<any>[] = [
@@ -83,11 +83,11 @@ export const columns: ColumnDef<any>[] = [
 
       const onDelete = () => {
         const { id }: any = row.original;
-        deleteProduct(id);
+        deleteEntry(id);
       };
 
       const onEdit = () => {
-        router.push(`/admin/products/editProduct/${row.original.id}`);
+        router.push(`/admin/products/productEntry/edit/${row.original.id}`);
       };
 
       return (
@@ -102,7 +102,7 @@ export const columns: ColumnDef<any>[] = [
             </Button>
 
             <Alert
-              title='Deseja excluir o produto?'
+              title='Deseja excluir essa entrada?'
               text='A operação não poderá ser desfeita'
               type='delete'
               onDelete={onDelete}
