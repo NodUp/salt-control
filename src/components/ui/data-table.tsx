@@ -38,6 +38,7 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
+  const [globalFilter, setGlobalFilter] = React.useState('');
 
   const router = useRouter();
 
@@ -48,8 +49,11 @@ export function DataTable<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
+    enableGlobalFilter: true,
+    onGlobalFilterChange: setGlobalFilter,
     state: {
       columnFilters,
+      globalFilter,
     },
   });
 
@@ -63,21 +67,14 @@ export function DataTable<TData, TValue>({
             onChange={(event: any) =>
               table.getColumn('name')?.setFilterValue(event.target.value)
             }
-            className='mr-4 w-[250px]'
+            className='mr-4 w-[250px] outline-none'
           />
-          {/**
-             * <Input
-            placeholder='Status ...'
-            value={
-              (table.getColumn('status')?.getFilterValue() as string) ?? ''
-            }
-            onChange={(event: any) =>
-              table.getColumn('status')?.setFilterValue(event.target.value)
-            }
-            className='w-[250px] outline-none'
+          <Input
+            placeholder='Buscar ...'
+            value={globalFilter}
+            onChange={(event: any) => setGlobalFilter(event.target.value)}
+            className='w-[250px]'
           />
-             * 
-             */}
         </div>
         <div>
           <Button

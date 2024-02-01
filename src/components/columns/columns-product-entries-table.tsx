@@ -8,72 +8,49 @@ import { Alert } from '../ui/alert';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { deleteEntry } from '@/actions/entry';
-//import { utcToZonedTime } from 'date-fns-tz';
 
 export const columns: ColumnDef<any>[] = [
   {
     accessorKey: 'name',
     header: 'Nome',
-    cell: ({ row }) => {
-      return (
-        <>
-          <div>
-            <span>{row.original.product.name}</span>
-          </div>
-        </>
-      );
+    enableGlobalFilter: true,
+    accessorFn: (row) => {
+      return row.product.name;
     },
   },
   {
     accessorKey: 'transportation',
     header: 'Transporte',
+    enableGlobalFilter: true,
   },
   {
-    accessorKey: 'arrivalDate',
+    enableGlobalFilter: true,
     header: 'Chegada',
-    cell: ({ row }) => {
-      const formatoBrasileiro = 'dd/MM/yyyy';
-      const dataFormatada = format(
-        row.original.arrivalDate,
-        formatoBrasileiro,
-        { locale: ptBR }
-      );
-      return (
-        <>
-          <div>
-            <span>{dataFormatada.toString()}</span>
-          </div>
-        </>
-      );
+    accessorFn: (row) => {
+      return format(row.arrivalDate, 'dd/MM/yyyy', {
+        locale: ptBR,
+      }).toString();
     },
   },
   {
     accessorKey: 'departureDate',
+    enableGlobalFilter: true,
     header: 'Saída',
-    cell: ({ row }) => {
-      const formatoBrasileiro = 'dd/MM/yyyy';
-      const dataFormatada = format(
-        row.original.departureDate,
-        formatoBrasileiro,
-        { locale: ptBR }
-      );
-
-      return (
-        <>
-          <div>
-            <span>{dataFormatada.toString()}</span>
-          </div>
-        </>
-      );
+    accessorFn: (row) => {
+      return format(row.departureDate, 'dd/MM/yyyy', {
+        locale: ptBR,
+      }).toString();
     },
   },
   {
     accessorKey: 'container',
     header: 'Container',
+    enableGlobalFilter: true,
   },
   {
     accessorKey: 'qtd',
     header: 'Quantidade',
+    enableGlobalFilter: true,
   },
   {
     id: 'actions',
