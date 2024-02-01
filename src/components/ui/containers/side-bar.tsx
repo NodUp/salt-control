@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 const array = [
   { href: '/admin/products/productEntry', title: 'Entrada' },
-  { href: '/admin', title: 'Saída' },
+  { href: '/admin/products/productDeparture', title: 'Saída' },
 ];
 
 const SideBar = () => {

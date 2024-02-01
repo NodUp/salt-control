@@ -66,7 +66,7 @@ const Input = ({
         className={className}
         name={name}
         errors={errors}
-        placeholder='R$'
+        placeholder={placeholder}
         control={control}
       />
     );
