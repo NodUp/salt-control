@@ -59,8 +59,8 @@ export const columns: ColumnDef<any>[] = [
       const router = useRouter();
 
       const onDelete = () => {
-        const { id }: any = row.original;
-        deleteEntry(id);
+        const { id, product }: any = row.original;
+        deleteEntry(id, product.id);
       };
 
       const onEdit = () => {

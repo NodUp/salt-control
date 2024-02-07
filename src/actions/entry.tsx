@@ -3,6 +3,70 @@
 import { prisma } from '../lib/prisma';
 import { revalidatePath } from 'next/cache';
 
+const getSockValue = async (
+  type: string,
+  entryId: string,
+  productId: string,
+  qtd: string
+): Promise<number> => {
+  return new Promise(async (resolve, reject) => {
+    if (type === 'add') {
+      const stock = await prisma.stocks.findMany({
+        where: {
+          productId,
+        },
+      });
+
+      if (stock && stock.length > 0) {
+        resolve(parseInt(stock[0].qtd.toString()) + parseFloat(qtd.toString()));
+      }
+    } else if (type === 'update') {
+      const entry = await prisma.entries.findUnique({
+        where: {
+          id: entryId,
+        },
+      });
+
+      const stock = await prisma.stocks.findMany({
+        where: {
+          productId,
+        },
+      });
+
+      if (entry && stock && stock.length > 0) {
+        resolve(
+          parseInt(stock[0].qtd.toString()) === 0
+            ? parseInt(qtd)
+            : parseInt(stock[0].qtd.toString()) -
+                parseInt(entry.qtd ? entry.qtd.toString() : '0') +
+                parseInt(qtd)
+        );
+      }
+    } else {
+      const entry = await prisma.entries.findUnique({
+        where: {
+          id: entryId,
+        },
+      });
+
+      if (entry) {
+        const stock = await prisma.stocks.findMany({
+          where: {
+            productId: entry.productId,
+          },
+        });
+
+        if (stock && stock.length > 0) {
+          resolve(
+            parseInt(stock[0].qtd.toString()) -
+              parseInt(entry.qtd ? entry.qtd.toString() : '0')
+          );
+        }
+      }
+    }
+  });
+};
+
 export const addEntry = async (formData: any) => {
   const {
     productId,
@@ -29,6 +93,16 @@ export const addEntry = async (formData: any) => {
       qtd: parseInt(qtd.trim()),
     },
   });
+
+  await prisma.stocks.updateMany({
+    where: {
+      productId,
+    },
+    data: {
+      qtd: await getSockValue('add', '', productId, qtd),
+    },
+  });
+
   revalidatePath('/admin/products/*');
 };
 
@@ -44,6 +118,8 @@ export const updateEntry = async (formData: any, id: string) => {
     status,
     qtd,
   } = formData;
+
+  const stockValue = await getSockValue('update', id, productId, qtd);
 
   await prisma.entries.update({
     where: {
@@ -61,6 +137,16 @@ export const updateEntry = async (formData: any, id: string) => {
       qtd: parseInt(qtd.trim()),
     },
   });
+
+  await prisma.stocks.updateMany({
+    where: {
+      productId,
+    },
+    data: {
+      qtd: stockValue,
+    },
+  });
+
   revalidatePath('/admin/products/*');
 };
 
@@ -87,11 +173,21 @@ export const getEntryById = async (id: string) => {
   return entry;
 };
 
-export const deleteEntry = async (id: string) => {
+export const deleteEntry = async (id: string, productId: string) => {
+  await prisma.stocks.updateMany({
+    where: {
+      productId,
+    },
+    data: {
+      qtd: await getSockValue('delete', id, '', '0'),
+    },
+  });
+
   await prisma.entries.delete({
     where: {
       id,
     },
   });
+
   revalidatePath('/admin/products/*');
 };
