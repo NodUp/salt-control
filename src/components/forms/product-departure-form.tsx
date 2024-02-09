@@ -70,7 +70,7 @@ function AddProductDepartureForm({ departure, products }: Props) {
       qtd: departure ? departure.qtd : '',
       invoice: departure ? departure.invoice : '',
       client: departure ? departure.client : '',
-      product_value: departure ? departure.value : '',
+      product_value: departure ? departure.value * 1 : '',
       productId: departure ? departure.product.id : '',
       departureDate: departure ? departure.departureDate : '',
     },

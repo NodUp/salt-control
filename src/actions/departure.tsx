@@ -15,18 +15,41 @@ export const addDeparture = async (formData: any) => {
     total,
   } = formData;
 
-  await prisma.departuries.create({
-    data: {
+  const stocks = await prisma.stocks.findMany({
+    where: {
       productId,
-      departureDate,
-      client,
-      invoice,
-      value: product_value,
-      qtd,
-      status,
-      total,
     },
   });
+
+  const [firstStock] = stocks;
+  const { qtd: stockQtd }: { qtd: any } = firstStock;
+
+  if (stockQtd >= qtd) {
+    await prisma.stocks.updateMany({
+      where: {
+        productId,
+      },
+      data: {
+        qtd: stockQtd - qtd,
+      },
+    });
+
+    await prisma.departuries.create({
+      data: {
+        productId,
+        departureDate,
+        client,
+        invoice,
+        value: product_value,
+        qtd,
+        status,
+        total,
+      },
+    });
+  } else {
+    return { error: 'Qtd inválida !' };
+  }
+
   revalidatePath('/admin/products/*');
 };
 
@@ -42,21 +65,50 @@ export const updateDeparture = async (formData: any, id: string) => {
     total,
   } = formData;
 
-  await prisma.departuries.update({
+  const departure = await prisma.departuries.findUnique({
     where: {
       id,
     },
-    data: {
+  });
+
+  const { qtd: departureQtd }: any = departure;
+
+  const stocks = await prisma.stocks.findMany({
+    where: {
       productId,
-      departureDate,
-      client,
-      invoice,
-      value: product_value,
-      qtd,
-      status,
-      total,
     },
   });
+
+  const [firstStock] = stocks;
+  const { qtd: stockQtd }: { qtd: any } = firstStock;
+
+  if (parseInt(stockQtd) + parseInt(departureQtd) >= qtd) {
+    await prisma.departuries.update({
+      where: {
+        id,
+      },
+      data: {
+        productId,
+        departureDate,
+        client,
+        invoice,
+        value: product_value,
+        qtd,
+        status,
+        total,
+      },
+    });
+
+    await prisma.stocks.updateMany({
+      where: {
+        productId,
+      },
+      data: {
+        qtd: parseInt(stockQtd) + parseInt(departureQtd) - parseInt(qtd),
+      },
+    });
+  }
+
   revalidatePath('/admin/products/*');
 };
 
@@ -84,6 +136,32 @@ export const getDepartureById = async (id: string) => {
 };
 
 export const deleteDeparture = async (id: string) => {
+  const departury = await prisma.departuries.findUnique({
+    where: {
+      id,
+    },
+  });
+
+  const { qtd: departureQtd, productId }: any = departury;
+
+  const stocks = await prisma.stocks.findMany({
+    where: {
+      productId,
+    },
+  });
+
+  const [firstStock] = stocks;
+  const { id: stockId, qtd: stockQtd } = firstStock;
+
+  await prisma.stocks.update({
+    where: {
+      id: stockId,
+    },
+    data: {
+      qtd: parseInt(stockQtd.toString()) + parseInt(departureQtd),
+    },
+  });
+
   await prisma.departuries.delete({
     where: {
       id,
