@@ -10,9 +10,9 @@ import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { SelectInput } from '../ui/select/select';
-import { DatePicker } from '../ui/data-picker';
 import { addUser } from '@/actions/user-action';
 import { SubmitButton } from '../ui/button/submit-button';
+import { useToast } from '../ui/use-toast';
 
 const schema = z.object({
   name: z.string().min(1, { message: 'Nome: campo obrigatório !' }),
@@ -24,36 +24,15 @@ const schema = z.object({
   confirm_password: z
     .string()
     .min(6, { message: 'Senha: campo obrigatório !' }),
-  tel: z
-    .string()
-    .transform((value) => value.replace(/\s+/g, ''))
-    .pipe(z.string().min(14, { message: 'Tel: campo obrigatório !' })),
-  cpf: z
-    .string()
-    .transform((value) => value.replace(/\s+/g, ''))
-    .pipe(z.string().min(14, { message: 'Cpf: campo obrigatório !' })),
-  city: z.string().min(1, { message: 'Cidade: campo obrigatório !' }),
-  dateBirth: z.coerce.date({
-    errorMap: (issue, { defaultError }) => ({
-      message:
-        issue.code === 'invalid_date'
-          ? 'Data: campo obrigatório !'
-          : defaultError,
-    }),
-  }),
-  price: z.string().min(1, { message: 'Valor: campo obrigatório !' }),
+  role: z.string().min(1, { message: 'Tipo: campo obrigatório !' }),
 });
 
 type Props = {
   user: any;
+  roles: any;
 };
 
-const cities = [
-  { id: 1, name: 'Mossoró' },
-  { id: 2, name: 'Angicos' },
-];
-
-function UserForm({ user }: Props) {
+function UserForm({ user, roles }: Props) {
   const {
     register,
     handleSubmit,
@@ -64,24 +43,26 @@ function UserForm({ user }: Props) {
   } = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
-      city: user.city ? '1' : '',
-      tel: user.tel ? user.tel : '',
-      cpf: user.cpf ? user.cpf : '',
-      price: user.price ? user.price : '',
+      role: user.roleId ? roles[0].id : '',
     },
   });
+  const { toast } = useToast();
 
   const onSubmit = async (data: any) => {
     addUser({
       ...data,
-      roleId: 'clrsg12oa00003kcugnp9en2b',
+      roleId: data.role,
       status: 'ACTIVE',
     });
 
     reset();
-    setValue('tel', '');
-    setValue('cpf', '');
-    setValue('city', '');
+    setValue('role', '');
+
+    toast({
+      title: 'Sucesso !',
+      description: 'Dados cadastrados.',
+      variant: 'constructive',
+    });
   };
 
   useEffect(() => {
@@ -109,7 +90,7 @@ function UserForm({ user }: Props) {
             placeholder='Nome'
           />
 
-          <Label className=''>Email:</Label>
+          <Label className=''>Login:</Label>
 
           <Input
             register={register}
@@ -119,49 +100,13 @@ function UserForm({ user }: Props) {
             variant='email'
           />
 
-          <Label className=''>Tel:</Label>
-
-          <Input
-            register={register}
-            name='tel'
-            errors={errors}
-            placeholder='Telefone'
-            variant='mask'
-            mask='(99) 9 9999-9999'
-          />
-
-          <Label className=''>Cpf:</Label>
-
-          <Input
-            register={register}
-            name='cpf'
-            errors={errors}
-            placeholder='Cpf'
-            variant='mask'
-            mask='999.999.999-99'
-          />
-
-          <Label className=''>Cidade:</Label>
+          <Label className=''>Tipo:</Label>
 
           <SelectInput
             errors={errors}
             control={control}
-            name='city'
-            items={cities}
-          />
-
-          <Label className=''>Data:</Label>
-
-          <DatePicker errors={errors} control={control} name='dateBirth' />
-
-          <Label className=''>Valor:</Label>
-
-          <Input
-            control={control}
-            name='price'
-            errors={errors}
-            placeholder='R$ '
-            variant='currency'
+            name='role'
+            items={roles}
           />
 
           <Label className=''>Senha:</Label>

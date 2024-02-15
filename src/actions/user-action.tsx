@@ -46,11 +46,6 @@ export async function addUser(formData: any) {
       data: {
         name: formData.name,
         userId: user.id,
-        cpf: formData.cpf,
-        tel: formData.tel,
-        city: formData.city,
-        dateBirth: new Date(formData.dateBirth).toISOString(),
-        price: formData.price,
       },
     });
 
@@ -58,4 +53,8 @@ export async function addUser(formData: any) {
     return user;
   });
   revalidatePath('/admin/*');
+}
+
+export async function findAllRoles() {
+  return await prisma.roles.findMany();
 }
