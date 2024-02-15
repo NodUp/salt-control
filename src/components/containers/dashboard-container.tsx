@@ -1,86 +1,13 @@
 'use client';
 
-import { Key } from 'lucide-react';
+type Props = {
+  products: any;
+};
 
-const array = [
-  {
-    name: 'BIG BAG MOÍDO 1000 KGS',
-    total: 100,
-    entrada_flutuante: 100,
-    entrada_local: 100,
-    saida_efetivada: 50,
-    sainda_programada: 50,
-  },
-  {
-    name: 'BIG BAG REFINADO 1000KGS - SEM IODO',
-    total: 100,
-    entrada_flutuante: 100,
-    entrada_local: 100,
-    saida_efetivada: 50,
-    sainda_programada: 50,
-  },
-  {
-    name: 'BIG BAG REFINADO 1000KGS - SEM IODO',
-    total: 100,
-    entrada_flutuante: 100,
-    entrada_local: 100,
-    saida_efetivada: 50,
-    sainda_programada: 50,
-  },
-  {
-    name: 'BIG BAG REFINADO 1000KGS - SEM IODO',
-    total: 100,
-    entrada_flutuante: 100,
-    entrada_local: 100,
-    saida_efetivada: 50,
-    sainda_programada: 50,
-  },
-  {
-    name: 'BIG BAG REFINADO 1000KGS - SEM IODO',
-    total: 100,
-    entrada_flutuante: 100,
-    entrada_local: 100,
-    saida_efetivada: 50,
-    sainda_programada: 50,
-  },
-  {
-    name: 'BIG BAG REFINADO 1000KGS - SEM IODO',
-    total: 100,
-    entrada_flutuante: 100,
-    entrada_local: 100,
-    saida_efetivada: 50,
-    sainda_programada: 50,
-  },
-  {
-    name: 'BIG BAG REFINADO 1000KGS - SEM IODO',
-    total: 100,
-    entrada_flutuante: 100,
-    entrada_local: 100,
-    saida_efetivada: 50,
-    sainda_programada: 50,
-  },
-  {
-    name: 'BIG BAG REFINADO 1000KGS - SEM IODO',
-    total: 100,
-    entrada_flutuante: 100,
-    entrada_local: 100,
-    saida_efetivada: 50,
-    sainda_programada: 50,
-  },
-  {
-    name: 'BIG BAG REFINADO 1000KGS - SEM IODO',
-    total: 100,
-    entrada_flutuante: 100,
-    entrada_local: 100,
-    saida_efetivada: 50,
-    sainda_programada: 50,
-  },
-];
-
-export default function DashBoardContainer() {
+export default function DashBoardContainer({ products }: Props) {
   return (
     <div className='mx-auto flex flex-wrap justify-center gap-4 rounded-lg border p-8'>
-      {array.map((i: any, index: any) => (
+      {products.map((i: any, index: any) => (
         <>
           <div className='h-[320px] w-[300px] max-w-[300px] rounded-lg border p-4'>
             <div className='flex h-[80px] flex-col justify-between'>
@@ -103,7 +30,7 @@ export default function DashBoardContainer() {
               <span className='font-semibold text-red-800'>Saída</span>
               <div className='flex flex-row gap-1'>
                 <span>Programada:</span>
-                <span>{i.sainda_programada}</span>
+                <span>{i.saida_programada}</span>
               </div>
               <div className='flex flex-row gap-1'>
                 <span>Efetuada:</span>
