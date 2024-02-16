@@ -1,14 +1,30 @@
 'use client';
 
-type Props = {
-  products: any;
-};
+import { useEffect, useState } from 'react';
+import { getSummaryProducts } from '@/actions/dashboard';
+import { db } from '@/lib/firebase.js';
+import { ref, onValue } from 'firebase/database';
 
-export default function DashBoardContainer({ products }: Props) {
+export default function DashBoardContainer() {
+  const [products, setProducts] = useState([]);
+
+  const load = async () => {
+    const products: any = await getSummaryProducts(new Date().getMonth());
+    setProducts(products);
+  };
+
+  useEffect(() => {
+    load();
+    onValue(ref(db, 'operation/time'), (snapshot) => {
+      //console.log(snapshot.val());
+      load();
+    });
+  }, []);
+
   return (
     <div className='mx-auto flex flex-wrap justify-center gap-4 rounded-lg border p-8'>
       {products.map((i: any, index: any) => (
-        <>
+        <div key={index}>
           <div className='h-[320px] w-[300px] max-w-[300px] rounded-lg border p-4'>
             <div className='flex h-[80px] flex-col justify-between'>
               <span className='mx-auto mb-2 font-bold'>{i.name}</span>
@@ -38,7 +54,7 @@ export default function DashBoardContainer({ products }: Props) {
               </div>
             </div>
           </div>
-        </>
+        </div>
       ))}
     </div>
   );

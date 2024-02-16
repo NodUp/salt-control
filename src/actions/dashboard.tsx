@@ -13,5 +13,5 @@ export const getSummaryProducts = async (month: number) => {
   from "Products" pro inner join "Stocks" s on s."productId" = pro.id
   `;
 
-  return result;
+  return JSON.parse(JSON.stringify(result));
 };

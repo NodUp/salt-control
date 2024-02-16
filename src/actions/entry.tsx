@@ -2,6 +2,7 @@
 
 import { prisma } from '../lib/prisma';
 import { revalidatePath } from 'next/cache';
+import { updateData } from '@/lib/firebase';
 
 const getSockValue = async (
   type: string,
@@ -147,6 +148,7 @@ export const updateEntry = async (formData: any, id: string) => {
     },
   });
 
+  updateData();
   revalidatePath('/admin/products/*');
 };
 
