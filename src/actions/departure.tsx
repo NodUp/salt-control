@@ -2,6 +2,7 @@
 
 import { prisma } from '../lib/prisma';
 import { revalidatePath } from 'next/cache';
+import { updateData } from '@/lib/firebase';
 
 export const addDeparture = async (formData: any) => {
   const {
@@ -50,6 +51,7 @@ export const addDeparture = async (formData: any) => {
     return { error: 'Qtd inválida !' };
   }
 
+  updateData(productId);
   revalidatePath('/admin/products/*');
 };
 
@@ -109,6 +111,7 @@ export const updateDeparture = async (formData: any, id: string) => {
     });
   }
 
+  updateData(productId);
   revalidatePath('/admin/products/*');
 };
 
@@ -167,5 +170,7 @@ export const deleteDeparture = async (id: string) => {
       id,
     },
   });
+
+  updateData(productId);
   revalidatePath('/admin/products/*');
 };

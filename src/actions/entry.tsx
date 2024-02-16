@@ -104,6 +104,7 @@ export const addEntry = async (formData: any) => {
     },
   });
 
+  updateData(productId);
   revalidatePath('/admin/products/*');
 };
 
@@ -148,7 +149,7 @@ export const updateEntry = async (formData: any, id: string) => {
     },
   });
 
-  updateData();
+  updateData(productId);
   revalidatePath('/admin/products/*');
 };
 
@@ -191,5 +192,6 @@ export const deleteEntry = async (id: string, productId: string) => {
     },
   });
 
+  updateData(productId);
   revalidatePath('/admin/products/*');
 };
