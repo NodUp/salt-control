@@ -58,3 +58,12 @@ export async function addUser(formData: any) {
 export async function findAllRoles() {
   return await prisma.roles.findMany();
 }
+
+export async function findAllusers() {
+  return await prisma.users.findMany({
+    include: {
+      person: true,
+      role: true,
+    },
+  });
+}

@@ -11,12 +11,18 @@ export type Users = {
   name: string;
   email: string;
   status: 'ativo' | 'pendente';
+  person: any;
+  role: any;
 };
 
 export const columns: ColumnDef<Users>[] = [
   {
     accessorKey: 'name',
     header: 'Nome',
+    enableGlobalFilter: true,
+    accessorFn: (row) => {
+      return row.person[0].name;
+    },
   },
   {
     accessorKey: 'email',
@@ -25,6 +31,14 @@ export const columns: ColumnDef<Users>[] = [
   {
     accessorKey: 'status',
     header: 'Status',
+  },
+  {
+    accessorKey: 'role',
+    header: 'Tipo',
+    enableGlobalFilter: true,
+    accessorFn: (row) => {
+      return row.role.name;
+    },
   },
   {
     id: 'actions',
