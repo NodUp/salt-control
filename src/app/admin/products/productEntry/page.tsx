@@ -15,6 +15,7 @@ export default async function ProductEntries() {
           columns={columns}
           data={entries}
           addPath='/admin/products/productEntry/add'
+          title='Entradas no Estoque'
         />
       </div>
     </div>

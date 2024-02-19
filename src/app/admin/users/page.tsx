@@ -15,6 +15,7 @@ export default async function Users() {
           columns={columns}
           data={data}
           addPath='/admin/users/adduser'
+          title='Usuários'
         />
       </div>
     </div>

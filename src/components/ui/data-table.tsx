@@ -28,12 +28,14 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   addPath: string;
+  title: string;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
   addPath,
+  title,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -60,7 +62,10 @@ export function DataTable<TData, TValue>({
   return (
     <div>
       <div className='flex w-[1000px] min-w-[1000px] flex-row items-center justify-between py-4'>
-        <div className='flex'>
+        <div className='flex items-center justify-center'>
+          <span className='ml-1 mr-4 text-xl font-bold text-sky-800/80'>
+            {title}
+          </span>
           <Input
             placeholder='Nome ...'
             value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}

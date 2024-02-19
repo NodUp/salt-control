@@ -15,6 +15,7 @@ export default async function ProductDeparturies() {
           columns={columns}
           data={departuries}
           addPath='/admin/products/productDeparture/add'
+          title='Saídas do Estoque'
         />
       </div>
     </div>

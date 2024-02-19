@@ -15,6 +15,7 @@ export default async function Products() {
           columns={columns}
           data={data}
           addPath='/admin/products/addProduct'
+          title='Produtos'
         />
       </div>
     </div>
