@@ -19,6 +19,15 @@ export const columns: ColumnDef<any>[] = [
     },
   },
   {
+    accessorKey: 'status',
+    header: 'Status',
+    enableGlobalFilter: true,
+    accessorFn: (row) => {
+      if (row.status === 'TRANSIT') return 'EM TRÂNSITO';
+      else return 'NO LOCAL';
+    },
+  },
+  {
     accessorKey: 'transportation',
     header: 'Transporte',
     enableGlobalFilter: true,
@@ -27,9 +36,11 @@ export const columns: ColumnDef<any>[] = [
     enableGlobalFilter: true,
     header: 'Chegada',
     accessorFn: (row) => {
-      return format(row.arrivalDate, 'dd/MM/yyyy', {
-        locale: ptBR,
-      }).toString();
+      if (row.arrivalDate)
+        return format(row.arrivalDate, 'dd/MM/yyyy', {
+          locale: ptBR,
+        }).toString();
+      return '';
     },
   },
   {

@@ -59,7 +59,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className='flex w-[800px] min-w-[800px] flex-row items-center justify-between py-4'>
+      <div className='flex w-[1000px] min-w-[1000px] flex-row items-center justify-between py-4'>
         <div className='flex'>
           <Input
             placeholder='Nome ...'
@@ -88,7 +88,7 @@ export function DataTable<TData, TValue>({
           </Button>
         </div>
       </div>
-      <div className='w-[800px] min-w-[800px] rounded-md border'>
+      <div className='w-[1000px] min-w-[1000px] rounded-md border'>
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

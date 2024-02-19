@@ -29,20 +29,13 @@ const schema = z.object({
           : defaultError,
     }),
   }),
-  arrivalDate: z.coerce.date({
-    errorMap: (issue, { defaultError }) => ({
-      message:
-        issue.code === 'invalid_date'
-          ? 'Data de Chegada: campo obrigatório !'
-          : defaultError,
-    }),
-  }),
+  arrivalDate: z.date().nullable().optional(),
   transportation: z
     .string()
     .min(1, { message: 'Meio de Transporte: campo obrigatório !' }),
-  container: z.string().min(1, { message: 'Container: campo obrigatório !' }),
-  invoice: z.string().min(1, { message: 'Nota Fiscal: campo obrigatório !' }),
-  damage: z.string().min(1, { message: 'Avaria: campo obrigatório !' }),
+  container: z.string().optional(),
+  invoice: z.string().optional(),
+  damage: z.string().optional(),
   status: z
     .string({
       required_error: 'Status: campo obrigatório !',
@@ -81,7 +74,7 @@ function AddProductEntryForm({ entry, products }: Props) {
       transportation: entry ? entry.transportation : '',
       productId: entry ? entry.product.id : '',
       departureDate: entry ? entry.departureDate : '',
-      arrivalDate: entry ? entry.arrivalDate : '',
+      arrivalDate: entry ? entry.arrivalDate : null,
     },
   });
 
