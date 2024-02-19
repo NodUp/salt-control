@@ -30,7 +30,7 @@ const schema = z.object({
     }),
   }),
   client: z.string().min(1, { message: 'Cliente: campo obrigatório !' }),
-  invoice: z.string().min(1, { message: 'Nota Fiscal: campo obrigatório !' }),
+  invoice: z.string().optional(),
   product_value: z
     .string({
       required_error: 'Valor: campo obrigatório !',
@@ -70,7 +70,7 @@ function AddProductDepartureForm({ departure, products }: Props) {
       qtd: departure ? departure.qtd : '',
       invoice: departure ? departure.invoice : '',
       client: departure ? departure.client : '',
-      product_value: departure ? departure.value * 1 : '',
+      product_value: departure ? (departure.value * 100).toString() : '',
       productId: departure ? departure.product.id : '',
       departureDate: departure ? departure.departureDate : '',
     },
@@ -84,6 +84,10 @@ function AddProductDepartureForm({ departure, products }: Props) {
   };
 
   const onSubmit = async (data: any) => {
+    if (!(data.product_value && data.product_value.includes('R'))) {
+      data.product_value = (data.product_value / 1000).toString();
+    }
+
     const productValue =
       parseFloat(data.product_value.replace(/R\$\s/g, '').replace(',', '.')) *
       10;
@@ -91,9 +95,10 @@ function AddProductDepartureForm({ departure, products }: Props) {
     const qtdProduct = parseFloat(data.qtd.trim());
 
     const total = productValue * qtdProduct;
+    let result = null;
 
     if (departure) {
-      await updateDeparture(
+      result = await updateDeparture(
         {
           ...data,
           product_value: productValue,
@@ -103,7 +108,7 @@ function AddProductDepartureForm({ departure, products }: Props) {
         departure.id
       );
     } else {
-      await addDeparture({
+      result = await addDeparture({
         ...data,
         product_value: productValue,
         qtd: qtdProduct,
@@ -111,11 +116,20 @@ function AddProductDepartureForm({ departure, products }: Props) {
       });
       clear();
     }
-    toast({
-      title: 'Sucesso !',
-      description: 'Dados cadastrados.',
-      variant: 'constructive',
-    });
+
+    if (!result) {
+      toast({
+        title: 'Sucesso !',
+        description: 'Dados cadastrados.',
+        variant: 'constructive',
+      });
+    } else {
+      toast({
+        title: 'Erro !',
+        description: 'Qtd Inválida.',
+        variant: 'destructive',
+      });
+    }
   };
 
   return (
@@ -170,6 +184,7 @@ function AddProductDepartureForm({ departure, products }: Props) {
             errors={errors}
             placeholder='Valor unitário'
             variant='currency'
+            setValue={setValue}
           />
 
           <Label className=''>Qtd:</Label>

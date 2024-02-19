@@ -10,6 +10,7 @@ function CurrencyInput({
   errors,
   placeholder,
   control,
+  setValue,
 }: Props) {
   function currencyFormatter(value: any) {
     if (!Number(value)) return '';
@@ -38,6 +39,9 @@ function CurrencyInput({
               placeholder={placeholder}
               value={field.value}
               onChangeValue={field.onChange}
+              onFocus={() => {
+                setValue(`${name}`, '');
+              }}
             />
           </>
         )}

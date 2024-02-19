@@ -47,12 +47,12 @@ export const addDeparture = async (formData: any) => {
         total,
       },
     });
+
+    updateData(productId);
+    revalidatePath('/admin/products/*');
   } else {
     return { error: 'Qtd inválida !' };
   }
-
-  updateData(productId);
-  revalidatePath('/admin/products/*');
 };
 
 export const updateDeparture = async (formData: any, id: string) => {

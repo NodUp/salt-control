@@ -17,6 +17,7 @@ export type Props = {
   register?: any;
   mask?: string;
   control?: any;
+  setValue?: any;
 };
 
 const Input = ({
@@ -28,6 +29,7 @@ const Input = ({
   register,
   mask,
   control,
+  setValue,
 }: Props) => {
   if (variant === 'email') {
     return (
@@ -68,6 +70,7 @@ const Input = ({
         errors={errors}
         placeholder={placeholder}
         control={control}
+        setValue={setValue}
       />
     );
   } else {
