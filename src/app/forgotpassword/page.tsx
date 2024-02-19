@@ -16,9 +16,7 @@ export default function ForgotPassword() {
           <Link
             href='/signup/'
             className='font-semibold text-gray-400 hover:underline'
-          >
-            Cadastre-se?
-          </Link>
+          ></Link>
         </div>
       </div>
     </main>

@@ -8,7 +8,7 @@ export default async function AddUser() {
   return (
     <div>
       <PathComponent />
-      <UserForm user={{}} roles={roles} />
+      <UserForm user={null} roles={roles} />
     </div>
   );
 }

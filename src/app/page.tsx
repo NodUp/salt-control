@@ -11,9 +11,7 @@ export default function Home() {
           <Link
             href='/signup/'
             className='font-semibold text-gray-400 hover:underline'
-          >
-            Cadastre-se
-          </Link>
+          ></Link>
           <Link
             href='/forgotpassword/'
             className='font-semibold text-gray-400 hover:underline'

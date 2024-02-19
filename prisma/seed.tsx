@@ -6,7 +6,7 @@ async function main() {
   await prisma.roles.createMany({
     data: [
       {
-        name: 'DEFAULT_USER',
+        name: 'COMUM',
       },
       {
         name: 'ADMIN',

@@ -3,8 +3,9 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { Button } from '@/components/ui/button';
 import EditIcon from '@/assets/icons/edit-icon';
-import TrashIcon from '@/assets/icons/trash-icon';
+import { Alert } from '../ui/alert';
 import { useRouter } from 'next/navigation';
+import { deleteUser } from '@/actions/user-action';
 
 export type Users = {
   id: string;
@@ -27,10 +28,19 @@ export const columns: ColumnDef<Users>[] = [
   {
     accessorKey: 'email',
     header: 'Email',
+    enableGlobalFilter: true,
   },
   {
     accessorKey: 'status',
     header: 'Status',
+    enableGlobalFilter: true,
+    accessorFn: (row) => {
+      if (row.status.toString() === 'ACTIVE') {
+        return 'ATIVO';
+      } else {
+        return 'INATIVO';
+      }
+    },
   },
   {
     accessorKey: 'role',
@@ -47,10 +57,8 @@ export const columns: ColumnDef<Users>[] = [
       const router = useRouter();
 
       const onDelete = () => {
-        //removeUser();
-        //row.original = [];
-        console.log('deletar usuário' + { ...row });
-        console.log(row.original);
+        const { id }: any = row.original;
+        deleteUser(id);
       };
 
       const onEdit = () => {
@@ -67,13 +75,12 @@ export const columns: ColumnDef<Users>[] = [
             <EditIcon />
           </Button>
 
-          <Button
-            variant='ghost'
-            className='h-8 w-8 p-0'
-            onClick={() => onDelete()}
-          >
-            <TrashIcon />
-          </Button>
+          <Alert
+            title='Deseja excluir esse usuário?'
+            text='A operação não poderá ser desfeita'
+            type='delete'
+            onDelete={onDelete}
+          />
         </div>
       );
     },

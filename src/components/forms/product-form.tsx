@@ -12,6 +12,7 @@ import { SubmitButton } from '../ui/button/submit-button';
 import { addProduct } from '@/actions/products';
 import type { Products } from '../columns/columns-products-table';
 import { editProduct } from '@/actions/products';
+import { useToast } from '../ui/use-toast';
 
 const schema = z.object({
   name: z.string({
@@ -36,6 +37,7 @@ export default function AddProductForm({ product }: Props) {
       name: product ? product.name : null,
     },
   });
+  const { toast } = useToast();
 
   const onSubmit = async (data: any) => {
     if (product) {
@@ -44,6 +46,11 @@ export default function AddProductForm({ product }: Props) {
       addProduct(data);
       reset();
     }
+    toast({
+      title: 'Sucesso !',
+      description: 'Dados cadastrados.',
+      variant: 'constructive',
+    });
   };
 
   return (

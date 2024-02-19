@@ -55,6 +55,36 @@ export async function addUser(formData: any) {
   revalidatePath('/admin/*');
 }
 
+export async function editUser(id: string, formData: any) {
+  const { name, email, role } = formData;
+  const person = await prisma.persons.findMany({
+    where: {
+      userId: id,
+    },
+  });
+
+  await prisma.persons.update({
+    data: {
+      name,
+    },
+    where: {
+      id: person[0].id,
+    },
+  });
+
+  await prisma.users.update({
+    data: {
+      email,
+      roleId: role,
+    },
+    where: {
+      id,
+    },
+  });
+
+  revalidatePath('/admin/users/*');
+}
+
 export async function findAllRoles() {
   return await prisma.roles.findMany();
 }
@@ -66,4 +96,27 @@ export async function findAllusers() {
       role: true,
     },
   });
+}
+
+export async function findById(id: string) {
+  return await prisma.users.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      person: true,
+    },
+  });
+}
+
+export async function deleteUser(id: string) {
+  await prisma.users.update({
+    where: {
+      id,
+    },
+    data: {
+      status: 'INACTIVE',
+    },
+  });
+  revalidatePath('/admin/users/*');
 }
