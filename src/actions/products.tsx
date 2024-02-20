@@ -86,3 +86,14 @@ export const deleteProduct = async (id: string) => {
   });
   revalidatePath('/admin/products/*');
 };
+
+export const getAllMovimentations = async (id: string) => {
+  const result = await prisma.$queryRaw`
+    select * from (
+      select 'Entrada' as tipo, qtd, "updateAt", '' as client from "Entries" e where "productId" = ${id}
+      union all 
+      select 'Saída' as tipo, qtd, "updateAt", client  from "Departuries" d where "productId" = ${id}
+    ) as subquery order by "updateAt" desc`;
+
+  return JSON.parse(JSON.stringify(result));
+};

@@ -66,14 +66,19 @@ export function DataTable<TData, TValue>({
           <span className='ml-1 mr-4 text-xl font-bold text-sky-800/80'>
             {title}
           </span>
-          <Input
-            placeholder='Nome ...'
-            value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
-            onChange={(event: any) =>
-              table.getColumn('name')?.setFilterValue(event.target.value)
-            }
-            className='mr-4 w-[250px] outline-none'
-          />
+          {table.getColumn('name') ? (
+            <Input
+              placeholder='Nome ...'
+              value={
+                (table.getColumn('name')?.getFilterValue() as string) ?? ''
+              }
+              onChange={(event: any) =>
+                table.getColumn('name')?.setFilterValue(event.target.value)
+              }
+              className='mr-4 w-[250px] outline-none'
+            />
+          ) : null}
+
           <Input
             placeholder='Buscar ...'
             value={globalFilter}
@@ -82,15 +87,17 @@ export function DataTable<TData, TValue>({
           />
         </div>
         <div>
-          <Button
-            variant='secondary'
-            size='sm'
-            onClick={() => {
-              router.push(addPath);
-            }}
-          >
-            + Adicionar
-          </Button>
+          {addPath ? (
+            <Button
+              variant='secondary'
+              size='sm'
+              onClick={() => {
+                router.push(addPath);
+              }}
+            >
+              + Adicionar
+            </Button>
+          ) : null}
         </div>
       </div>
       <div className='w-[1000px] min-w-[1000px] rounded-md border'>
