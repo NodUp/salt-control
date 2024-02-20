@@ -92,6 +92,8 @@ export const addEntry = async (formData: any) => {
       damage,
       status,
       qtd: parseInt(qtd.trim()),
+      createAt: new Date(),
+      updateAt: new Date(),
     },
   });
 
@@ -137,6 +139,7 @@ export const updateEntry = async (formData: any, id: string) => {
       damage,
       status,
       qtd: parseInt(qtd.trim()),
+      updateAt: new Date(),
     },
   });
 
@@ -158,6 +161,7 @@ export const getEntries = async () => {
     include: {
       product: true,
     },
+    orderBy: [{ updateAt: 'desc' }],
   });
 
   return entries;

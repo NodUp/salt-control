@@ -69,6 +69,8 @@ model Entries {
   invoice String?
   damage String?
   qtd Decimal?
+  createAt DateTime?
+  updateAt DateTime?
   status EntriesStatus?
   productId String
   product   Products?  @relation(fields: [productId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "entries_productId_foreign")
@@ -82,6 +84,8 @@ model Departuries {
   value Decimal?
   total Decimal?
   qtd Decimal?
+  createAt DateTime?
+  updateAt DateTime?
   status DeparturiesStatus?
   productId String
   product   Products?  @relation(fields: [productId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "departuries_productId_foreign")

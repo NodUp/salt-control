@@ -45,6 +45,8 @@ export const addDeparture = async (formData: any) => {
         qtd,
         status,
         total,
+        createAt: new Date(),
+        updateAt: new Date(),
       },
     });
 
@@ -98,6 +100,7 @@ export const updateDeparture = async (formData: any, id: string) => {
         qtd,
         status,
         total,
+        updateAt: new Date(),
       },
     });
 
@@ -120,6 +123,7 @@ export const getDeparturies = async () => {
     include: {
       product: true,
     },
+    orderBy: [{ updateAt: 'desc' }],
   });
 
   return departuries;

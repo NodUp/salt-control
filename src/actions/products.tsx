@@ -7,6 +7,7 @@ import type { Products } from '@prisma/client';
 export const getProducts = async (): Promise<Products[]> => {
   const products = await prisma.stocks.findMany({
     include: { product: true },
+    orderBy: [{ product: { name: 'asc' } }],
   });
 
   return products.map((i: any) => {

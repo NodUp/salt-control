@@ -34,7 +34,9 @@ function Alert({ title, text, onDelete, type }: Props) {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancelar</AlertDialogCancel>
-          <AlertDialogAction onClick={onDelete}>Continuar</AlertDialogAction>
+          <AlertDialogAction onClick={onDelete} className='bg-sky-800/80'>
+            Continuar
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
