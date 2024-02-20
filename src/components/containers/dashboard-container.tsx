@@ -30,7 +30,7 @@ export default function DashBoardContainer() {
       {products.map((i: any, index: any) => (
         <div key={index}>
           <div
-            className={`flex h-[235px] w-[180px] max-w-[180px] flex-col rounded-lg border ${i.productid === lastUpdateId ? 'border-sky-800/80' : ''} p-2`}
+            className={`flex h-[235px] w-[180px] max-w-[180px] flex-col rounded-lg border ${i.product_id === lastUpdateId ? 'border-sky-800/80' : ''} p-2`}
           >
             <div className='flex h-[60px] flex-col justify-between'>
               <Link
