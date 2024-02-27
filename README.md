@@ -1,12 +1,12 @@
 ## Getting Started
 
-1. Install all dependecies:
+1. Install all dependencies
 
 ```
 npm i
 ```
 
-2. Run migrations:
+2. Run migrations
 
 ```
 npx prisma migrate dev --name init
