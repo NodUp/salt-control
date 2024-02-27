@@ -1,27 +1,33 @@
 ## Getting Started
 
-1. Install all dependencies
+1. Clone project
+
+```
+git clone https://github.com/NodUp/salt-control.git
+```
+
+2. Install all dependencies
 
 ```
 npm i
 ```
 
-2. Run migrations
+3. Run migrations
 
 ```
 npx prisma migrate dev --name init
 ```
 
-3. Run seeds
+4. Run seeds
 
 ```
 npx prisma db seed
 ```
 
-4. Run project
+5. Run project
 
 ```
 npm run dev
 ```
 
-5. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+6. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
