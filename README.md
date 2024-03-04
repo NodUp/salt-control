@@ -1,3 +1,7 @@
+## Important Note
+
+How is a Nextjs 14 project, you have to use node version 20 or superior
+
 ## Getting Started
 
 1. Clone project
@@ -12,22 +16,39 @@ git clone https://github.com/NodUp/salt-control.git
 npm i
 ```
 
-3. Run migrations
+3. Creat a postgres database
+
+```
+db name: salt
+user: postgresql
+password: 123
+```
+
+4. Run migrations
 
 ```
 npx prisma migrate dev --name init
 ```
 
-4. Run seeds
+5. Run seeds
 
 ```
 npx prisma db seed
 ```
 
-5. Run project
+6. Run manual seed
+
+```
+Open seed.tsx
+copy a comment script
+replace " symbol for '
+run on postgresql
+```
+   
+7. Run project
 
 ```
 npm run dev
 ```
 
-6. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+8. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
